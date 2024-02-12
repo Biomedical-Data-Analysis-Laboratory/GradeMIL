@@ -95,12 +95,9 @@ for wsi_name in os.listdir(wsi_dataset_file_path):
 
     # Inter magnification tracker
     df_csv = pd.DataFrame.from_dict({
-    '400X_coor': list(),
-    '400Y_coor': list(),
-    '100X_coor': list(),
-    '100Y_coor': list(),
-    '25X_coor': list(),
-    '25Y_coor': list(),
+    'Path_400x': list(),
+    'Path_100x': list(),
+    'Path_25x': list(),
     'Reg_ID': list()
     })
 
@@ -276,15 +273,18 @@ for wsi_name in os.listdir(wsi_dataset_file_path):
         
                     # Save tile to coordinate dict (coordinate of top-left corner)
                     tile_400x = full_image_400.extract_area(int(tile_x['400x']), int(tile_y['400x']), TILE_SIZE, TILE_SIZE)
-                    tile_400x.jpegsave(output_folder + wsi_name + '/' + str(region_count) + '/400x/' + str(tile_x['400x']) + '_' + str(tile_y['400x']) + '.jpeg', Q=100)
+                    tile_400x_filename = output_folder + wsi_name + '/' + str(region_count) + '/400x/' + str(tile_x['400x']) + '_' + str(tile_y['400x']) + '.jpeg'
+                    tile_400x.jpegsave(tile_400x_filename, Q=100)
 
                     tile_100x = full_image_100.extract_area(int(tile_x['100x']), int(tile_y['100x']), TILE_SIZE, TILE_SIZE)
-                    tile_100x.jpegsave(output_folder + wsi_name + '/' + str(region_count) + '/100x/' + str(tile_x['100x']) + '_' + str(tile_y['100x']) + '.jpeg', Q=100)
+                    tile_100x_filename = output_folder + wsi_name + '/' + str(region_count) + '/100x/' + str(tile_x['100x']) + '_' + str(tile_y['100x']) + '.jpeg'
+                    tile_100x.jpegsave(tile_100x_filename, Q=100)
 
                     tile_25x = full_image_25.extract_area(int(tile_x['25x']), int(tile_y['25x']), TILE_SIZE, TILE_SIZE)
-                    tile_25x.jpegsave(output_folder + wsi_name + '/' + str(region_count) + '/25x/' + str(tile_x['25x']) + '_' + str(tile_y['25x']) + '.jpeg', Q=100)
+                    tile_25x_filename = output_folder + wsi_name + '/' + str(region_count) + '/25x/' + str(tile_x['25x']) + '_' + str(tile_y['25x']) + '.jpeg'
+                    tile_25x.jpegsave(tile_25x_filename, Q=100)
 
-                    df_csv.loc[len(df_csv)] = [tile_x['400x'], tile_y['400x'], tile_x['100x'], tile_y['100x'], tile_x['25x'], tile_y['25x'], region_count]
+                    df_csv.loc[len(df_csv)] = [tile_400x_filename, tile_100x_filename, tile_25x_filename, region_count]
 
     cv2.imwrite(output_folder + wsi_name + '/uro_mask.jpeg', overview_uro_jpeg_file, [int(cv2.IMWRITE_JPEG_QUALITY), 100])
     df_csv.to_csv(output_folder + wsi_name + '/tile_info.csv')
