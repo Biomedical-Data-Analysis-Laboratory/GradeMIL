@@ -29,7 +29,7 @@ This codebase presents a two-part framework for image analysis, comprising a tis
 **Usage:**
 - Use the `segmentation/main_segmentation.py` script to extract tiles and define regions of urothelium. Adjust extraction settings as needed.
 - After data extraction, you can use the `grading/main_grading.py` script to train the nested MIL grading classifier. Specify the input data sources and adjust the model architecture according to your requirements.
-- The `grading/inference.py` script allows you to perform inference on new images using the trained classification model.
+- The `grading/inference.py` script allows you to perform inference on new images using the trained classification model. The attention range has to be normalized first, using `grading/inf_att_range.py`
 
 **Dependencies:**
 - Ensure that you have the required dependencies listed in the `requirements.txt` file.
